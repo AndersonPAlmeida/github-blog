@@ -39,7 +39,7 @@ export const stylesStandard = {
   },
   widthScreen: {
     screenXG: css`
-      width: 112rem;
+      width: 87rem;
       margin: 0 auto;
     `,
   },
