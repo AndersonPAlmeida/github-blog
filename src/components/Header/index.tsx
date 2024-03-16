@@ -1,7 +1,9 @@
-import { HeaderContainer } from "./style";
+import { Background, HeaderContainer } from "./style";
 
 export function Header() {
   return (
-    <HeaderContainer></HeaderContainer>
+    <HeaderContainer>
+      <Background />
+    </HeaderContainer>
   );
 }
