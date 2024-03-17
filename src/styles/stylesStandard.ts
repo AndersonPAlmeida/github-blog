@@ -16,6 +16,13 @@ export const stylesStandard = {
       font-weight: 700;
     `,
 
+    titleP: css`
+      font-family: "Nunito", sans-serif;
+      font-size: 1.8rem;
+      line-height: 130%;
+      font-weight: 700;
+    `,
+    
     textM: css`
       font-family: "Nunito", sans-serif;
       font-size: 1.6rem;
