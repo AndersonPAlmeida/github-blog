@@ -41,3 +41,9 @@ export const SearchFormContainer = styled.form`
     }
   }
 `
+
+export const CardContentContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 42rem);
+  gap: 3.2rem;
+`
