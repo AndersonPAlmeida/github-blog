@@ -1,23 +1,18 @@
 import styled from "styled-components";
 import { stylesStandard } from "../../../../styles/stylesStandard";
 
-export const ProfileContainer = styled.div`
+export const DescriptionContainer = styled.div`
   width: 100%;
   display: flex;
-  gap: 3.2rem;
-`
-
-export const Description = styled.section`
-  display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 2rem;
 `
 
-export const Name = styled.section`
+export const Links = styled.section`
+  width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  color: ${(props) => props.theme["base-title"]};
-  ${stylesStandard.fonts.titleL}
 
   a {
     display: flex;
@@ -35,6 +30,17 @@ export const Name = styled.section`
     &:hover {
       border-bottom-color: ${(props) => props.theme.blue};
     }
+  }
+`
+
+export const Header = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h2 {
+    color: ${(props) => props.theme["base-title"]};
+    ${stylesStandard.fonts.titleL}
   }
 `
 
