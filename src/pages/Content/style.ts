@@ -7,5 +7,8 @@ export const ContentContainer = styled.section`
 
   display: flex;
   flex-direction: column;
-  gap: 4.8rem;
+`
+
+export const ContentDescription = styled.section`
+  padding: 4rem 3.2rem;
 `
