@@ -1,10 +1,14 @@
-import { Profile } from "./components/Profile";
+import { ReactNode } from "react";
 import { SummaryContainer } from "./style";
 
-export function Summary(){
+interface SummaryProps {
+  children: ReactNode
+}
+
+export function Summary({ children } : SummaryProps){
   return (
     <SummaryContainer>
-      <Profile />
+      {children}
     </SummaryContainer>
   )
 }

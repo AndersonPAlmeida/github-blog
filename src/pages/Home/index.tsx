@@ -1,11 +1,14 @@
 import { Summary } from '../../components/Summary'
 import { Card } from './components/Card'
+import { Profile } from './components/Profile'
 import { CardContentContainer, HomeContainer, SearchFormContainer, TitlePublications } from './style'
 
 export function Home() {
   return(
     <HomeContainer>      
-      <Summary />
+      <Summary>
+        <Profile />
+      </Summary>
 
       <div>
         <TitlePublications>
