@@ -26,9 +26,9 @@ export function Home() {
       </div>
 
       <CardContentContainer>
-        <Card />
-        <Card />
-        <Card />
+        <Card numberIssue={1}/>
+        <Card numberIssue={2}/>
+        <Card numberIssue={3}/>
       </CardContentContainer>
     </HomeContainer>
   )

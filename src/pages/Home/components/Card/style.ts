@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { stylesStandard } from "../../../../styles/stylesStandard";
+import { Link } from "react-router-dom";
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Link)`
   background-color: ${(props) => props.theme["base-post"]};
   max-height: 26rem;
   border-radius: 1rem;
@@ -43,4 +44,5 @@ export const Content = styled.div`
   -webkit-line-clamp: 6; 
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+  color: ${({ theme }) => theme["base-text"]};
 `

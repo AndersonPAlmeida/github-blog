@@ -1,14 +1,15 @@
 import { FaAngleLeft, FaArrowUpRightFromSquare, FaBuilding, FaGithub, FaUserGroup } from 'react-icons/fa6'
 import { Datas, DescriptionContainer, Header, Links } from "./style";
+import { NavLink } from 'react-router-dom';
 
 export function Description() {
   return (
     <DescriptionContainer>
       <Links>
-        <a href="#">
+        <NavLink to="/" title="Home">
           <FaAngleLeft size={14} />
           Voltar
-        </a>
+        </NavLink>
         <a href="#">
           Ver no github 
           <FaArrowUpRightFromSquare size={14}/>

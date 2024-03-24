@@ -7,7 +7,7 @@ export const HomeContainer = styled.section`
 
   display: flex;
   flex-direction: column;
-  gap: 4.8rem;
+  gap: 3rem;
 `
 
 export const TitlePublications = styled.div`
@@ -45,5 +45,5 @@ export const SearchFormContainer = styled.form`
 export const CardContentContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 42rem);
-  gap: 3.2rem;
+  gap: 2.5rem 3.2rem;
 `

@@ -35,7 +35,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
 
     const {name, bio, login, company, followers, avatar_url, html_url} = data
 
-    if (name && bio && login && company && followers && avatar_url && html_url) {
+    if (name && login && avatar_url && html_url) {
       setUser({ name, bio, login, company, followers, avatar_url, html_url });
     } else {
       console.error("Dados incompletos recebidos da API");

@@ -1,8 +1,12 @@
 import { CardContainer, Content, Title } from "./style";
 
-export function Card(){
+interface CardProps {
+  numberIssue: number;
+}
+
+export function Card({numberIssue }: CardProps){
   return (
-    <CardContainer>
+    <CardContainer to={`/post/${numberIssue}`}>
       <Title>
         <h3>JavaScript data types and data structures</h3>
         <span>Há 2 dias</span>
