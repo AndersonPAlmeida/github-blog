@@ -3,7 +3,7 @@ import { Description } from "./components/Description";
 import { ContentContainer, ContentDescription } from "./style";
 import Markdown from 'react-markdown'
 
-export function Content() {
+export function Post() {
   return (
     <ContentContainer>
       <Summary>
