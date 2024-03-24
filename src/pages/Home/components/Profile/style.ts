@@ -5,9 +5,16 @@ export const ProfileContainer = styled.div`
   width: 100%;
   display: flex;
   gap: 3.2rem;
+
+  img {
+    width: 15rem;
+    height: 15rem;
+    border-radius: 8px;
+  }
 `
 
 export const Description = styled.section`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

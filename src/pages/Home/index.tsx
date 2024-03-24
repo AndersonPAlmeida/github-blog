@@ -1,9 +1,13 @@
+import { useContext } from 'react'
 import { Summary } from '../../components/Summary'
 import { Card } from './components/Card'
 import { Profile } from './components/Profile'
 import { CardContentContainer, HomeContainer, SearchFormContainer, TitlePublications } from './style'
+import { PostContext } from '../../contexts/PostsContext'
 
 export function Home() {
+  const { profile } = useContext(PostContext)
+  
   return(
     <HomeContainer>      
       <Summary>
