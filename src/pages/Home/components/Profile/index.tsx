@@ -1,12 +1,16 @@
 import { FaArrowUpRightFromSquare, FaBuilding, FaGithub, FaUserGroup } from 'react-icons/fa6'
 import { Datas, Description, Name, ProfileContainer } from './style'
-import { useContext } from 'react'
-import { PostContext } from '../../../../contexts/PostsContext'
+import { useProfile } from '../../../../hooks/useProfile'
 
 export function Profile() {
-  const { profile } = useContext(PostContext)
+  const profile  = useProfile()
   
+  if (profile === null) {
+    throw new Error('Erro ao carregar usuário');
+  }
+
   const {name, bio, login, company, followers, avatar_url, html_url} = profile;
+
   return (
     <ProfileContainer>
       <img src={avatar_url} />
