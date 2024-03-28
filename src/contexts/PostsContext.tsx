@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
+import { api } from "../lib/axios";
 
 interface Post {
   title: string;
@@ -9,6 +10,7 @@ interface Post {
 
 interface PostContextType {
   posts: Post[];
+  fetchPosts: (query ?: string) => Promise<void>;
 }
 
 interface PostsProviderProps {
@@ -20,10 +22,18 @@ export const PostContext = createContext({} as PostContextType)
 export function PostsProvider({ children }: PostsProviderProps) {
   const [posts, setPosts] = useState<Post[]>([])
 
-  async function getPosts() {
-    const response = await fetch('https://api.github.com/search/issues?q=Boas%20práticas%20repo:rocketseat-education/reactjs-github-blog-challenge');
-    const data = await response.json();
+  async function fetchPosts(query = '') {
+    const response = await api.get('/search/issues', {
+      params: {
+        q:`${query} repo:AndersonPAlmeida/github-blog`,
+        
+      }
+    })
+    const data = await response.data;
     
+    if(query) {
+      console.log(query);
+    }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const newPosts = data.items.map((item: any) => {
         const { title, number, updated_at, body } = item;
@@ -35,13 +45,16 @@ export function PostsProvider({ children }: PostsProviderProps) {
   }
 
   useEffect(() => {
-    getPosts();
+    fetchPosts();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   return (
-    <PostContext.Provider value={{posts}}>
+    <PostContext.Provider value={{
+      posts,
+      fetchPosts
+    }}>
       { children }
     </PostContext.Provider>
   )

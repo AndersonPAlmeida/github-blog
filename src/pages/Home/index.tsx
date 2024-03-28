@@ -35,7 +35,7 @@ export function Home() {
       <CardContentContainer>
         {
           posts.map((post) => (
-            <CardContainer to={`/post/${post.number}`}>
+            <CardContainer key={post.number} to={`/post/${post.number}`}>
               <Title>
                 <h3>{post.title}</h3>
                 <span>{dateFormatter(new Date(post.updated_at))}</span>

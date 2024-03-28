@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { SearchFormContainer } from "./style";
 import * as zod from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useContext } from "react";
+import { PostContext } from "../../../../contexts/PostsContext";
 
 const searchFormSchema = zod.object({
   query: zod.string()
@@ -10,19 +12,26 @@ const searchFormSchema = zod.object({
 type SearchFormInputs = zod.infer<typeof searchFormSchema>
 
 export function SearchForm() {
-  const { register, handleSubmit } = useForm<SearchFormInputs>({
+  const { register, reset } = useForm<SearchFormInputs>({
     resolver: zodResolver(searchFormSchema),
   })
+  const { fetchPosts } = useContext(PostContext) 
+
+  async function handleKeyPress (event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      await handleSearchPosts({ query: event.currentTarget.value });
+    }
+  }
 
   async function handleSearchPosts(data: SearchFormInputs){
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    console.log(data);
+    await fetchPosts(data.query)
+    reset()
   }
 
   return (
-    <SearchFormContainer onChange={handleSubmit(handleSearchPosts)}>
-      <input type="text" {...register('query')} placeholder="Buscar conteúdo" />
+    <SearchFormContainer>
+      <input type="text" {...register('query')} placeholder="Buscar conteúdo" onKeyPress={handleKeyPress}/>
     </SearchFormContainer>
   )
 }
