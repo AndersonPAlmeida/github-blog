@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 import { Summary } from '../../components/Summary'
-import { Card } from './components/Card'
 import { Profile } from './components/Profile'
-import { CardContentContainer, HomeContainer, SearchFormContainer, TitlePublications } from './style'
+import { CardContainer, CardContentContainer, Content, HomeContainer, SearchFormContainer, Title, TitlePublications } from './style'
 import { PostContext } from '../../contexts/PostsContext'
+import { dateFormatter } from '../../utils/formatter'
+import Markdown from 'react-markdown'
 
 export function Home() {
   const { posts } = useContext(PostContext)
-  
-  console.log(posts);
+  const qtdPost = posts.length
   
   return(
     <HomeContainer>      
@@ -19,7 +19,13 @@ export function Home() {
       <div>
         <TitlePublications>
           <h2>Publicações</h2>
-          <span>6 publicações</span>
+          <span>
+            {
+              qtdPost === 1 ? 
+              `${qtdPost} Publicação ` : 
+              `${qtdPost} Publicações`
+            }
+          </span>
         </TitlePublications>
 
         <SearchFormContainer>
@@ -28,9 +34,23 @@ export function Home() {
       </div>
 
       <CardContentContainer>
-        <Card numberIssue={1}/>
-        <Card numberIssue={2}/>
-        <Card numberIssue={3}/>
+        {
+          posts.map((post) => (
+            <CardContainer to={`/post/${post.number}`}>
+              <Title>
+                <h3>{post.title}</h3>
+                <span>{dateFormatter(new Date(post.updated_at))}</span>
+              </Title>
+              
+              <Content>
+                <Markdown>
+                  {post.body}
+                </Markdown>
+              </Content>
+            </CardContainer>
+          ))
+        }
+        
       </CardContentContainer>
     </HomeContainer>
   )
