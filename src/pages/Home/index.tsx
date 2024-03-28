@@ -1,10 +1,11 @@
 import { useContext } from 'react'
 import { Summary } from '../../components/Summary'
 import { Profile } from './components/Profile'
-import { CardContainer, CardContentContainer, Content, HomeContainer, SearchFormContainer, Title, TitlePublications } from './style'
+import { CardContainer, CardContentContainer, Content, HomeContainer, Title, TitlePublications } from './style'
 import { PostContext } from '../../contexts/PostsContext'
 import { dateFormatter } from '../../utils/formatter'
 import Markdown from 'react-markdown'
+import { SearchForm } from './components/SearchForm'
 
 export function Home() {
   const { posts } = useContext(PostContext)
@@ -28,9 +29,7 @@ export function Home() {
           </span>
         </TitlePublications>
 
-        <SearchFormContainer>
-          <input type="text" name="searchContent" placeholder="Buscar conteúdo" />
-        </SearchFormContainer>
+        <SearchForm />
       </div>
 
       <CardContentContainer>

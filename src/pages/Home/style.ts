@@ -28,21 +28,6 @@ export const TitlePublications = styled.div`
   }
 `
 
-export const SearchFormContainer = styled.form`
-  display: flex;
-
-  input {
-    flex: 1;
-    border-radius: 6px;
-    padding: 1.2rem 1.6rem;
-    background-color: ${(props) => props.theme["base-input"]};
-    
-    &::placeholder {
-      color: ${(props) => props.theme["base-label"]};
-    }
-  }
-`
-
 export const CardContentContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 42rem);
