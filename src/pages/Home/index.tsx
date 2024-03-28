@@ -6,7 +6,9 @@ import { CardContentContainer, HomeContainer, SearchFormContainer, TitlePublicat
 import { PostContext } from '../../contexts/PostsContext'
 
 export function Home() {
-  const { profile } = useContext(PostContext)
+  const { posts } = useContext(PostContext)
+  
+  console.log(posts);
   
   return(
     <HomeContainer>      
