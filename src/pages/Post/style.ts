@@ -11,4 +11,8 @@ export const ContentContainer = styled.section`
 
 export const ContentDescription = styled.section`
   padding: 4rem 3.2rem;
+
+  .line-break {
+    white-space: pre-wrap;
+  }
 `

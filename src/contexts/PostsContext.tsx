@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { api } from "../lib/axios";
+import RemoveMarkdown from "remove-markdown";
 
 interface Post {
   title: string;
@@ -35,9 +36,10 @@ export function PostsProvider({ children }: PostsProviderProps) {
     const data = await response.data;
     
     const newPosts = data.items.map((item: Post) => {
-        const { title, number, updated_at, body, html_url } = item;
-        return { title, number, updated_at, body, html_url };
-        
+      const { title, number, updated_at, body, html_url } = item;
+      const contentPost = RemoveMarkdown(body).replace(/\s/g, " ").replace(/\s$/, "");
+
+      return { title, number, updated_at, body: contentPost, html_url };
     });
     
     setPosts([...newPosts]);

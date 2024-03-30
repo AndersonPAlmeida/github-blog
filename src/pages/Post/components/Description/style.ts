@@ -5,7 +5,7 @@ export const DescriptionContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
 `
 
 export const Links = styled.section`
