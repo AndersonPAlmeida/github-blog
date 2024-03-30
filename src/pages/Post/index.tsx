@@ -12,15 +12,15 @@ import { useTheme } from "styled-components";
 
 export function Post() {
   const { number } = useParams()
-  const { post, fetchPost } = useContext(PostContext)
+  const { post, searchPostApi } = useContext(PostContext)
   const colors = useTheme()
 
   useEffect(() => {
-    fetchPost(Number(number));
+    searchPostApi(Number(number));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
-  console.log(post, number);
+  // console.log(post, number);
   
   return (
     <ContentContainer>

@@ -1,5 +1,5 @@
+import { stylesStandard } from './../../styles/stylesStandard';
 import styled from "styled-components";
-import { stylesStandard } from "../../styles/stylesStandard";
 
 export const ContentContainer = styled.section`
   ${stylesStandard.widthScreen.screenXG}
@@ -15,4 +15,12 @@ export const ContentDescription = styled.section`
   .line-break {
     white-space: pre-wrap;
   }
+`
+
+export const ErrorContainer = styled.section`
+  ${stylesStandard.fonts.titleP}
+  background-color: ${(props) => props.theme.red};
+  color: ${(props) => props.theme["base-makdown"]};
+  padding: 1rem;
+  border-radius: 8px;
 `

@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import { api } from "../lib/axios";
 import RemoveMarkdown from "remove-markdown";
 
-interface Post {
+interface PostProps {
   title: string;
   number: number;
   updated_at: string;
@@ -10,11 +10,15 @@ interface Post {
   html_url: string;
 }
 
+interface ErrorMessageProps {
+  message: string;
+}
 interface PostContextType {
-  post: Post;
-  posts: Post[];
+  post: PostProps;
+  posts: PostProps[];
+  errorMessage: ErrorMessageProps;
   fetchPosts: (query ?: string) => Promise<void>;
-  fetchPost: (query ?: number) => Promise<void>;
+  searchPostApi: (query ?: number) => Promise<void>;
 }
 
 interface PostsProviderProps {
@@ -24,8 +28,9 @@ interface PostsProviderProps {
 export const PostContext = createContext({} as PostContextType)
 
 export function PostsProvider({ children }: PostsProviderProps) {
-  const [posts, setPosts] = useState<Post[]>([])
-  const [post, setPost] = useState<Post>({} as Post)
+  const [posts, setPosts] = useState<PostProps[]>([])
+  const [post, setPost] = useState<PostProps>({} as PostProps)
+  const [errorMessage, setErrorMessage] = useState<ErrorMessageProps>({} as ErrorMessageProps)
 
   async function fetchPosts(query = '') {
     const response = await api.get('/search/issues', {
@@ -35,7 +40,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
     })
     const data = await response.data;
     
-    const newPosts = data.items.map((item: Post) => {
+    const newPosts = data.items.map((item: PostProps) => {
       const { title, number, updated_at, body, html_url } = item;
       const contentPost = RemoveMarkdown(body).replace(/\s/g, " ").replace(/\s$/, "");
 
@@ -45,13 +50,24 @@ export function PostsProvider({ children }: PostsProviderProps) {
     setPosts([...newPosts]);
   }
 
-  async function fetchPost(query = 0) {
-    const response = await api.get(`/repos/AndersonPAlmeida/github-blog/issues/${query}`);
-    const data = await response.data;
+  async function searchPostApi(query = 0) {
+    try {
+      const response = await api.get(`/repos/AndersonPAlmeida/github-blog/issues/${query}`);
+      
+      const { title, number, updated_at, body, html_url} = response.data;
 
-    const { title, number, updated_at, body, html_url} = data;
+      setPost({title, number, updated_at, body, html_url});
+      setErrorMessage({message: ""})
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      let message = "Não foi possível buscar os dados do post."
+      
+      if(error?.response.status === 404) {
+        message = "Não foi possível encontrar post com esse número."
+      }
 
-    setPost({title, number, updated_at, body, html_url});
+      setErrorMessage({message: message})
+    }
   }
 
   useEffect(() => {
@@ -64,8 +80,9 @@ export function PostsProvider({ children }: PostsProviderProps) {
     <PostContext.Provider value={{
       post,
       posts,
+      errorMessage,
       fetchPosts,
-      fetchPost
+      searchPostApi
     }}>
       { children }
     </PostContext.Provider>
