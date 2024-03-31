@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export interface User {
   name: string;
@@ -31,9 +31,7 @@ export function useProfile() {
     }
   }
 
-  useEffect(() => {
-    loadUser()
-  }, [])
+  loadUser()
 
   return user
 }
