@@ -9,21 +9,13 @@ import { SearchForm } from './components/SearchForm'
 import { Loading } from '../../components/Loading'
 
 export function Home() {
-  const { posts,searchPostsApi, loading, loadingPage } = useContext(PostContext)
+  const { posts, loading, searchPostsApi, loadingPage } = useContext(PostContext)
   const quantityPosts = posts.length
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await searchPostsApi();        
+    searchPostsApi();        
 
-        loadingPage()
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    fetchData();
+    loadingPage()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
