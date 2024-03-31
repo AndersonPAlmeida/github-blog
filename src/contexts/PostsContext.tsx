@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 import { api } from "../lib/axios";
 import RemoveMarkdown from "remove-markdown";
 
@@ -17,8 +17,8 @@ interface PostContextType {
   post: PostProps;
   posts: PostProps[];
   errorMessage: ErrorMessageProps;
-  fetchPosts: (query ?: string) => Promise<void>;
   searchPostApi: (query ?: number) => Promise<void>;
+  searchPostsApi: (query ?: string) => Promise<void>;
 }
 
 interface PostsProviderProps {
@@ -32,22 +32,34 @@ export function PostsProvider({ children }: PostsProviderProps) {
   const [post, setPost] = useState<PostProps>({} as PostProps)
   const [errorMessage, setErrorMessage] = useState<ErrorMessageProps>({} as ErrorMessageProps)
 
-  async function fetchPosts(query = '') {
-    const response = await api.get('/search/issues', {
-      params: {
-        q:`${query} repo:AndersonPAlmeida/github-blog`,  
-      }
-    })
-    const data = await response.data;
-    
-    const newPosts = data.items.map((item: PostProps) => {
-      const { title, number, updated_at, body, html_url } = item;
-      const contentPost = RemoveMarkdown(body).replace(/\s/g, " ").replace(/\s$/, "");
+  async function searchPostsApi(query = '') {
+    try {
+      const response = await api.get('/search/issues', {
+        params: {
+          q:`${query} repo:AndersonPAlmeida/github-blog`,  
+        }
+      })
+      const data = await response.data;
 
-      return { title, number, updated_at, body: contentPost, html_url };
-    });
-    
-    setPosts([...newPosts]);
+      const newPosts = data.items.map((item: PostProps) => {
+        const { title, number, updated_at, body, html_url } = item;
+        const contentPost = RemoveMarkdown(body).replace(/\s/g, " ").replace(/\s$/, "");
+  
+        return { title, number, updated_at, body: contentPost, html_url };
+      });
+
+      setPosts([...newPosts]);
+      setErrorMessage({message: ""})
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      let message = "Não foi possível encontrar o(s) post(s)."
+      
+      if(error?.response.status === 404) {
+        message = "Não foi possível encontrar post com essa descrição."
+      }
+
+      setErrorMessage({message: message})
+    }
   }
 
   async function searchPostApi(query = 0) {
@@ -70,18 +82,12 @@ export function PostsProvider({ children }: PostsProviderProps) {
     }
   }
 
-  useEffect(() => {
-    fetchPosts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  
   return (
     <PostContext.Provider value={{
       post,
       posts,
       errorMessage,
-      fetchPosts,
+      searchPostsApi,
       searchPostApi
     }}>
       { children }

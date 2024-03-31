@@ -38,6 +38,8 @@ export const CardContainer = styled(Link)`
   background-color: ${(props) => props.theme["base-post"]};
   max-height: 26rem;
   border-radius: 1rem;
+  border: 1px solid transparent;
+  transition: border-color 0.5s;
   padding: 3.2rem;
 
   display: flex;
@@ -47,6 +49,10 @@ export const CardContainer = styled(Link)`
   a {
     display: block;
     height: 100%;
+  }
+
+  &:hover {
+    border-color: ${(props) => props.theme["base-span"]};
   }
 `
 
@@ -77,4 +83,13 @@ export const Content = styled.div`
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   color: ${({ theme }) => theme["base-text"]};
+`
+
+export const WarningContainer = styled.section`
+  ${stylesStandard.fonts.titleP}
+  background-color: ${(props) => props.theme.yellow};
+  color: ${(props) => props.theme["base-input"]};
+  padding: 1rem;
+  border-radius: 8px;
+  grid-column: span 2
 `
