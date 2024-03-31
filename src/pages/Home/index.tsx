@@ -6,60 +6,81 @@ import { PostContext } from '../../contexts/PostsContext'
 import { dateFormatter } from '../../utils/formatter'
 import Markdown from 'react-markdown'
 import { SearchForm } from './components/SearchForm'
+import { Loading } from '../../components/Loading'
 
 export function Home() {
-  const { posts,searchPostsApi } = useContext(PostContext)
+  const { posts,searchPostsApi, loading, loadingPage } = useContext(PostContext)
   const quantityPosts = posts.length
-  
+
   useEffect(() => {
-    searchPostsApi();
+    const fetchData = async () => {
+      try {
+        await searchPostsApi();        
+
+        loadingPage()
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return(
-    <HomeContainer>      
+    <HomeContainer>   
       <Summary>
         <Profile />
-      </Summary>
+      </Summary>   
+      {
+        loading ?
+        <div>
+          <TitlePublications>
+            <h2>Publicações</h2>
+          </TitlePublications>
+          <SearchForm />
+          <Loading />
+        </div> :
+        <>
+          <div>
+            <TitlePublications>
+              <h2>Publicações</h2>
+              <span>
+                {
+                  quantityPosts === 1 ? 
+                  `${quantityPosts} Publicação ` : 
+                  `${quantityPosts} Publicações`
+                }
+              </span>
+            </TitlePublications>
 
-      <div>
-        <TitlePublications>
-          <h2>Publicações</h2>
-          <span>
+            <SearchForm />
+          </div>
+
+          <CardContentContainer>
             {
-              quantityPosts === 1 ? 
-              `${quantityPosts} Publicação ` : 
-              `${quantityPosts} Publicações`
-            }
-          </span>
-        </TitlePublications>
-
-        <SearchForm />
-      </div>
-
-      <CardContentContainer>
-        {
-          quantityPosts === 0 ?
-          <WarningContainer>
-            Não há posts com essas palavras chaves
-          </WarningContainer> :
-          posts.map((post) => (
-            <CardContainer key={post.number} to={`/post/${post.number}`}>
-              <Title>
-                <h3>{post.title}</h3>
-                <span>{dateFormatter(new Date(post.updated_at))}</span>
-              </Title>
-              
-              <Content>
-                <Markdown>
-                  {post.body}
-                </Markdown>
-              </Content>
-            </CardContainer>
-          ))
-        }
-        
-      </CardContentContainer>
+              quantityPosts === 0 ?
+              <WarningContainer>
+                Não há posts com essas palavras chaves
+              </WarningContainer> :
+              posts.map((post) => (
+                <CardContainer key={post.number} to={`/post/${post.number}`}>
+                  <Title>
+                    <h3>{post.title}</h3>
+                    <span>{dateFormatter(new Date(post.updated_at))}</span>
+                  </Title>
+                  
+                  <Content>
+                    <Markdown>
+                      {post.body}
+                    </Markdown>
+                  </Content>
+                </CardContainer>
+              ))
+            }          
+          </CardContentContainer>
+        </>
+      }
     </HomeContainer>
   )
 }

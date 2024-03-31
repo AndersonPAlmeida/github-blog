@@ -15,10 +15,11 @@ export function SearchForm() {
   const { register, reset } = useForm<SearchFormInputs>({
     resolver: zodResolver(searchFormSchema),
   })
-  const { searchPostsApi } = useContext(PostContext) 
+  const { searchPostsApi, loadingPage } = useContext(PostContext) 
 
   async function handleKeyPress (event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
+      loadingPage()
       event.preventDefault()
       await handleSearchPosts({ query: event.currentTarget.value });
     }

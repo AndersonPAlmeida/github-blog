@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const LoadingContainer = styled.div`
   width: 100%;
+  margin-top: 2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.blue};
 
   svg {
