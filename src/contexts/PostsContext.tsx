@@ -17,8 +17,10 @@ interface PostContextType {
   post: PostProps;
   posts: PostProps[];
   errorMessage: ErrorMessageProps;
+  loading: boolean;
   searchPostApi: (query ?: number) => Promise<void>;
   searchPostsApi: (query ?: string) => Promise<void>;
+  loadingPage: () => void;
 }
 
 interface PostsProviderProps {
@@ -31,6 +33,7 @@ export function PostsProvider({ children }: PostsProviderProps) {
   const [posts, setPosts] = useState<PostProps[]>([])
   const [post, setPost] = useState<PostProps>({} as PostProps)
   const [errorMessage, setErrorMessage] = useState<ErrorMessageProps>({} as ErrorMessageProps)
+  const [loading, setLoading] = useState(true);
 
   async function searchPostsApi(query = '') {
     try {
@@ -82,13 +85,23 @@ export function PostsProvider({ children }: PostsProviderProps) {
     }
   }
 
+  function loadingPage() {
+    setLoading(true)
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }
+
   return (
     <PostContext.Provider value={{
       post,
       posts,
+      loading,
       errorMessage,
       searchPostsApi,
-      searchPostApi
+      searchPostApi,
+      loadingPage
     }}>
       { children }
     </PostContext.Provider>
